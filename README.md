@@ -52,3 +52,24 @@ public class App {
     }
 }
 ```
+
+## Contributing
+
+### Requirements
+
+- Java 17+
+- Maven 3.8+
+
+### Git hooks
+
+This repo ships a portable pre-commit hook under `.githooks/pre-commit` that runs a local `mvn compile` sanity check before every commit. It is **not** installed automatically — enable it once per clone with:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+There is no Husky setup here: Husky is an npm-ecosystem tool that hooks into `package.json`/`node_modules`, and this is a pure Maven module with no Node.js tooling involved. A plain POSIX shell script wired through `core.hooksPath` is the idiomatic equivalent for a Maven/JVM repo and keeps the module dependency-free.
+
+### CI
+
+Every push and pull request against `main` runs `mvn -B verify` on Java 17 (Temurin) via GitHub Actions (`.github/workflows/ci.yml`).
