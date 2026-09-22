@@ -1,0 +1,27 @@
+#!/bin/sh
+# Portable pre-commit hook for the Serafort Java SDK.
+#
+# This is a pure-Maven module with no npm/Node.js involved, so Husky (an
+# npm-ecosystem tool) does not apply here. This plain POSIX shell script,
+# wired in via `git config core.hooksPath .githooks`, is the idiomatic
+# dependency-free equivalent for a Maven repo.
+#
+# Enable it once per clone with:
+#   git config core.hooksPath .githooks
+
+set -e
+
+if ! command -v mvn >/dev/null 2>&1; then
+	echo "[pre-commit] Maven not found on PATH; skipping local build check."
+	echo "[pre-commit] Install Maven to get compile feedback before pushing (CI will still run 'mvn verify')."
+	exit 0
+fi
+
+echo "[pre-commit] Running mvn -q -o compile..."
+if ! mvn -q -o compile; then
+	echo "[pre-commit] Offline compile failed (likely missing local repo cache)."
+	echo "[pre-commit] Retrying online..."
+	mvn -q compile
+fi
+
+echo "[pre-commit] All checks passed."
