@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.serafort.sdk.SerafortConfig;
 import com.serafort.sdk.errors.AuthenticationException;
-import com.serafort.sdk.errors.SerafortException;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
