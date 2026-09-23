@@ -7,12 +7,10 @@ import com.serafort.sdk.m2m.M2MModule;
 import java.util.List;
 
 public class SerafortClient {
-    private final SerafortConfig config;
     private final M2MModule m2m;
     private final B2BModule b2b;
 
     public SerafortClient(SerafortConfig config) {
-        this.config = config;
         this.m2m = new M2MModule(config);
         this.b2b = new B2BModule(config);
     }
