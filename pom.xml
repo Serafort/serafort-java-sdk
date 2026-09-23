@@ -25,4 +25,12 @@
             <version>2.15.2</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>Serafort Java SDK GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Serafort/serafort-java-sdk</url>
+        </repository>
+    </distributionManagement>
 </project>
