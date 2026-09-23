@@ -4,9 +4,32 @@ Official Java client library for the Serafort identity platform. High-performanc
 
 ## Installation
 
-### Maven
+This package is published to [GitHub Packages](https://github.com/Serafort/serafort-java-sdk/packages), not Maven Central. GitHub Packages requires authentication to *download* even public packages, so consumers need a GitHub personal access token with `read:packages` scope configured in their `~/.m2/settings.xml`:
 
 ```xml
+<settings>
+  <servers>
+    <server>
+      <id>github</id>
+      <username>YOUR_GITHUB_USERNAME</username>
+      <password>YOUR_GITHUB_TOKEN</password>
+    </server>
+  </servers>
+</settings>
+```
+
+### Maven
+
+Add the repository and dependency to `pom.xml`:
+
+```xml
+<repositories>
+    <repository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/Serafort/serafort-java-sdk</url>
+    </repository>
+</repositories>
+
 <dependency>
     <groupId>com.serafort</groupId>
     <artifactId>serafort-sdk</artifactId>
@@ -16,8 +39,20 @@ Official Java client library for the Serafort identity platform. High-performanc
 
 ### Gradle
 
-```groovy
-implementation 'com.serafort:serafort-sdk:0.1.0'
+```kotlin
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/Serafort/serafort-java-sdk")
+        credentials {
+            username = "YOUR_GITHUB_USERNAME"
+            password = "YOUR_GITHUB_TOKEN"
+        }
+    }
+}
+
+dependencies {
+    implementation("com.serafort:serafort-sdk:0.1.0")
+}
 ```
 
 ## Quickstart
@@ -73,3 +108,7 @@ There is no Husky setup here: Husky is an npm-ecosystem tool that hooks into `pa
 ### CI
 
 Every push and pull request against `main` runs `mvn -B verify` on Java 17 (Temurin) via GitHub Actions (`.github/workflows/ci.yml`).
+
+### Publishing
+
+Publishing to GitHub Packages (`.github/workflows/publish.yml`) runs on every published GitHub release, or manually via `workflow_dispatch`. It authenticates with the repo's built-in `GITHUB_TOKEN` (no separate secret needed) and requires no local `write:packages` token — bump the `<version>` in `pom.xml` and cut a GitHub release to publish.
